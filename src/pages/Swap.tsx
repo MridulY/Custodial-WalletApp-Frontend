@@ -6,6 +6,7 @@ import { Button } from '../components/ui/Button';
 import { Card, CardContent, CardHeader, CardFooter } from '../components/ui/Card';
 import { TokenIcon } from '../components/ui/TokenIcon';
 import { tokenService } from '../services/token';
+import { toast } from 'react-toastify';
 
 export function Swap() {
   const tokens = useAtomValue(tokenAtom);
@@ -113,9 +114,11 @@ export function Swap() {
       setIsSwapping(false);
       
       // Show success message
-      alert(
-        `Successfully swapped ${transaction.status} ${amountNumber} ${fromTokenObj.symbol} for ${estimatedAmount} ${toTokenObj?.symbol}`
-      );
+      toast.success(`Successfully Swapped ${fromToken} to ${toToken}!`, {
+        position: "top-center", 
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     } catch (error) {
       console.error('Error swapping tokens', error);
       setError((error as Error).message || 'Error during swap');

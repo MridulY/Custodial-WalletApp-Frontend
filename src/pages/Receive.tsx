@@ -8,6 +8,8 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { TokenIcon } from '../components/ui/TokenIcon';
 import { tokenService } from '../services/token';
+import { toast } from "react-toastify"; // Import the toast
+import "react-toastify/dist/ReactToastify.css";
 
 export function Receive() {
   const wallet = useAtomValue(walletAtom);
@@ -50,6 +52,13 @@ export function Receive() {
       addTransaction(transaction);
       setAmount('');
       setSimulateReceive(false);
+
+      toast.success(`Successfully received ${amount} ${token?.symbol}!`, {
+        position: "top-center", // Use string value for positioning
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
+
     } catch (error) {
       console.error('Error simulating receive', error);
     } finally {

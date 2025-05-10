@@ -1,44 +1,58 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { Copy, Check, ArrowRight, LogOut, Shield, Bell, MonitorSmartphone } from 'lucide-react';
-import { walletAtom } from '../state/atoms';
-import { Card, CardContent, CardHeader } from '../components/ui/Card';
-import { Button } from '../components/ui/Button';
-import { walletService } from '../services/wallet';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAtomValue, useSetAtom } from "jotai";
+import {
+  Copy,
+  Check,
+  ArrowRight,
+  LogOut,
+  Shield,
+  Bell,
+  MonitorSmartphone,
+} from "lucide-react";
+import { walletAtom } from "../state/atoms";
+import { Card, CardContent, CardHeader } from "../components/ui/Card";
+import { Button } from "../components/ui/Button";
+import { walletService } from "../services/wallet";
+import { toast } from "react-toastify";
 
 export function Settings() {
   const wallet = useAtomValue(walletAtom);
   const setWallet = useSetAtom(walletAtom);
   const navigate = useNavigate();
-  
+
   const [copied, setCopied] = useState(false);
   const [confirmingLogout, setConfirmingLogout] = useState(false);
-  
+
   if (!wallet) {
-    navigate('/');
+    navigate("/");
     return null;
   }
 
   const walletName = localStorage.getItem("walletName");
   const walletCreatedAt = localStorage.getItem("walletCreatedAt");
-  
+
   const copyAddress = () => {
     navigator.clipboard.writeText(wallet.address);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    toast.success(`Copied To ClipBoard`, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+    });
   };
-  
+
   const handleLogout = () => {
     if (confirmingLogout) {
       walletService.deleteWallet();
       setWallet(null);
-      navigate('/');
+      navigate("/");
     } else {
       setConfirmingLogout(true);
     }
   };
-  
+
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-6">

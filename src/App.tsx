@@ -5,6 +5,7 @@ import { Layout } from './components/layout/Layout';
 import {walletAtom, authAtom } from "./state/atoms";
 import { useEffect } from 'react';
 import { authService } from './services/auth';
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const auth = useAtomValue(authAtom);
@@ -21,6 +22,8 @@ function App() {
 
 
   return (
+    <>
+    <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
     <Routes>
       <Route path="/" element={<Layout />}>
         {!auth.user ? (
@@ -47,6 +50,7 @@ function App() {
         )}
       </Route>
     </Routes>
+    </>
   );
 }
 

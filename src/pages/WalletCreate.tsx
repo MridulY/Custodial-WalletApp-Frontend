@@ -8,6 +8,7 @@ import { Card, CardContent, CardFooter } from "../components/ui/Card";
 import { Input } from "../components/ui/Input";
 import { walletService } from "../services/wallet";
 import { decryptPrivateKey } from "../utils/cryptoUtils";
+import { toast } from "react-toastify";
 
 export function WalletCreate() {
   const [step, setStep] = useState(1);
@@ -31,7 +32,7 @@ export function WalletCreate() {
     try {
       // Make API call to the backend to generate the wallet
       const response = await walletService.createWallet(walletName);
-      const mnemonic = response.mnemonic ? response.mnemonic.toString() : ""; 
+      const mnemonic = response.mnemonic ? response.mnemonic.toString() : "";
       const createdAt = new Date().toISOString();
       const decryptedKey = await decryptPrivateKey(
         response.encryptedPrivateKey
@@ -44,6 +45,14 @@ export function WalletCreate() {
       localStorage.setItem("walletName", walletName);
       localStorage.setItem("walletCreatedAt", createdAt);
       setStep(2);
+      toast.success(
+        `Wallet Created Successfully with address ${response.address}`,
+        {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+        }
+      );
     } catch (error) {
       console.error("Error generating wallet", error);
     } finally {
@@ -55,6 +64,14 @@ export function WalletCreate() {
     navigator.clipboard.writeText(text);
     setCopied(type);
     setTimeout(() => setCopied(null), 2000);
+    toast.success(
+      `Copied To ClipBoard`,
+      {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      }
+    );
   };
 
   const saveWallet = () => {

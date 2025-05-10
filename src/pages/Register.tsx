@@ -7,6 +7,7 @@ import { Button } from "../components/ui/Button";
 import { Card, CardContent } from "../components/ui/Card";
 import { Input } from "../components/ui/Input";
 import { authService } from "../services/auth";
+import { toast } from "react-toastify";
 
 export function Register() {
   const [name, setName] = useState("");
@@ -25,6 +26,11 @@ export function Register() {
     try {
       const user = await authService.register(email, password, name);
       setAuth({ user, isLoading: false, error: null });
+      toast.success(`Successfully Registered as ${email}`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
       navigate("/");
     } catch (err) {
       setError((err as Error).message);

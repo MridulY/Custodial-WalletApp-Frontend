@@ -7,6 +7,7 @@ import { Button } from "../components/ui/Button";
 import { Card, CardContent } from "../components/ui/Card";
 import { Input } from "../components/ui/Input";
 import { authService } from "../services/auth";
+import { toast } from "react-toastify";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -24,6 +25,11 @@ export function Login() {
     try {
       const user = await authService.login(email, password);
       setAuth({ user, isLoading: false, error: null });
+      toast.success(`Successfully Logged-In as ${email}`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
       navigate("/");
     } catch (err) {
       setError((err as Error).message);
