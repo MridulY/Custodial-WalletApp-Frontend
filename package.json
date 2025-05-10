@@ -4,10 +4,11 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm install -g vite && vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "serve": "vite preview",
+    "postinstall": "npm install"
   },
   "dependencies": {
     "@ethersproject/address": "^5.8.0",
