@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { TokenData, Transaction } from '../types/index';
 import { ethers } from 'ethers';
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://custodial-walletapp-backend-1.onrender.com/api";
 
 const PREDEFINED_TOKEN_ADDRESSES = [
   // {

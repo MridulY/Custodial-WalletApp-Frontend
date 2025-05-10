@@ -12,8 +12,8 @@ const PRIVATE_KEY =
   "ca2b7c89c92f93e4f733701f2dab75188ac6b46ec65ad14b392665a17da1d64b";
 
 // Addresses (ERC-20 Tokens and Uniswap Router)
-const TOKEN_A_ADDRESS = "0x4ffD88e2DB68323585986233CEDf0ff087C72D30"; // Replace with your ERC20 token A address
-const TOKEN_B_ADDRESS = "0x06DDeeD3D2Eb3dEad723c037b89E4384BFb29Bf8"; // Replace with your ERC20 token B address
+const TOKEN_A_ADDRESS = "0x06DDeeD3D2Eb3dEad723c037b89E4384BFb29Bf8"; // Replace with your ERC20 token A address
+const TOKEN_B_ADDRESS = "0xe1cdd8F52FcBf06cb4582f4816a2634a842D5bBC"; // Replace with your ERC20 token B address
 const ROUTER_ADDRESS = "0xeE567Fe1712Faf6149d80dA1E6934E354124CfE3"; // Uniswap V2 Router address
 const FACTORY_ADDRESS = "0xF62c03E08ada871A0bEb309762E260a7a6a880E6";
 // ABI for Uniswap V2 Router and ERC20 tokens
@@ -47,10 +47,6 @@ async function main() {
 
   // STEP 1: Approve token A to be spent by the Uniswap Router
   const amountIn = parseUnits("1", 18); // Swap 1 token
-  console.log("Approving token A...");
-  let tx = await tokenA.approve(ROUTER_ADDRESS, amountIn);
-  await tx.wait();
-  console.log("Token A approved for swap.");
 
   // STEP 2: Check if the pair exists using the factory
   const pairAddress = await factory.getPair(TOKEN_A_ADDRESS, TOKEN_B_ADDRESS);
@@ -63,8 +59,18 @@ async function main() {
     );
 
     // Approve tokens for adding liquidity
-    const amountA = parseUnits("10", 18); // 10 of Token A
-    const amountB = parseUnits("20", 18); // 20 of Token B
+    const amountA = parseUnits("100", 18); // 10 of Token A
+    const amountB = parseUnits("100", 18); // 20 of Token B
+
+    console.log("Approving token A...");
+    let tx = await tokenA.approve(ROUTER_ADDRESS, amountA);
+    await tx.wait();
+    console.log("Token A approved for swap.");
+
+    console.log("Approving token B...");
+    let txB = await tokenB.approve(ROUTER_ADDRESS, amountB); // Adjust amountIn as needed for Token B
+    await txB.wait();
+    console.log("Token B approved for liquidity.");
 
     // Check token allowances and balances
     const allowanceA = await tokenA.allowance(wallet.address, ROUTER_ADDRESS);
@@ -78,19 +84,19 @@ async function main() {
     console.log("Token B Balance:", formatUnits(balanceB, 18));
 
     // Ensure the allowance and balance are sufficient (compare using BigInt)
-    if (
-      BigInt(allowanceA.toString()) < BigInt(amountA.toString()) ||
-      BigInt(allowanceB.toString()) < BigInt(amountB.toString())
-    ) {
-      throw new Error("Token allowance is insufficient.");
-    }
+    // if (
+    //   BigInt(allowanceA.toString()) < BigInt(amountA.toString()) ||
+    //   BigInt(allowanceB.toString()) < BigInt(amountB.toString())
+    // ) {
+    //   throw new Error("Token allowance is insufficient.");
+    // }
 
-    if (
-      BigInt(balanceA.toString()) < BigInt(amountA.toString()) ||
-      BigInt(balanceB.toString()) < BigInt(amountB.toString())
-    ) {
-      throw new Error("Token balance is insufficient.");
-    }
+    // if (
+    //   BigInt(balanceA.toString()) < BigInt(amountA.toString()) ||
+    //   BigInt(balanceB.toString()) < BigInt(amountB.toString())
+    // ) {
+    //   throw new Error("Token balance is insufficient.");
+    // }
 
     // Add liquidity to Uniswap
     const deadline = Math.floor(Date.now() / 1000) + 60 * 20; // 20 minutes from now

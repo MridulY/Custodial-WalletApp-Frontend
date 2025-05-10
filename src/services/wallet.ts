@@ -3,7 +3,7 @@ import axios from 'axios';
 import { WalletData } from '../types';
 import { authService } from "./auth";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://custodial-walletapp-backend-1.onrender.com/api";
 
 class WalletService {
   private async fetchWithAuth(endpoint: string, options: RequestInit = {}) {
@@ -57,13 +57,16 @@ class WalletService {
     to: string,
     deadline: number
   ) {
-    const response = await axios.post("http://localhost:3000/api/wallet/swap", {
-      amountIn,
-      amountOutMin,
-      path,
-      to,
-      deadline,
-    });
+    const response = await axios.post(
+      "https://custodial-walletapp-backend-1.onrender.com/api/wallet/swap",
+      {
+        amountIn,
+        amountOutMin,
+        path,
+        to,
+        deadline,
+      }
+    );
     return response.data;
   }
 }

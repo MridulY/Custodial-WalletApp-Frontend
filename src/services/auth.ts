@@ -1,6 +1,6 @@
 import { UserData } from "../types";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://custodial-walletapp-backend-1.onrender.com/api";
 
 class AuthService {
   private user: UserData | null = null;
