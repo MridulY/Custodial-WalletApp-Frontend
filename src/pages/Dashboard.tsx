@@ -151,7 +151,7 @@ export function Dashboard() {
                 className="bg-gradient-to-r from-green-500 to-teal-600 text-white border-none hover:from-green-600 hover:to-teal-700 shadow-md transition duration-300 ease-in-out transform hover:scale-105"
                 icon={<Send size={16} />}
               >
-                Send
+                Swap
               </Button>
             </Link>
           </div>

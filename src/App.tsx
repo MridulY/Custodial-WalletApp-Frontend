@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Wallet, WalletCreate, Dashboard, TokenDetails, Swap, Settings, Receive, Login, Register } from './pages';
+import { Wallet, WalletCreate, Dashboard, Swap, Settings, Receive, Login, Register } from './pages';
 import { Layout } from './components/layout/Layout';
 import {walletAtom, authAtom } from "./state/atoms";
 import { useEffect } from 'react';
@@ -39,7 +39,6 @@ function App() {
         ) : (
           <>
             <Route index element={<Dashboard />} />
-            <Route path="token/:id" element={<TokenDetails />} />
             <Route path="swap" element={<Swap />} />
             <Route path="receive" element={<Receive />} />
             <Route path="settings" element={<Settings />} />
