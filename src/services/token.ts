@@ -52,12 +52,12 @@ const PREDEFINED_TOKEN_ADDRESSES = [
   //   name: "Aave",
   //   decimals: 18,
   // },
-  // {
-  //   id: "0xdac17f958d2ee523a2206206994597c13d831ec7", // Tether (USDT) ERC-20 on Ethereum
-  //   symbol: "USDT",
-  //   name: "Tether (ERC-20)",
-  //   decimals: 6,
-  // },
+  {
+    id: "0xe1cdd8F52FcBf06cb4582f4816a2634a842D5bBC", // Tether (USDT) ERC-20 on Ethereum
+    symbol: "ALGOX",
+    name: "Algorithm X",
+    decimals: 6,
+  },
   {
     id: "0x779877A7B0D9E8603169DdbD7836e478b4624789", // Synthetix Network Token (SNX)
     symbol: "LINK",
